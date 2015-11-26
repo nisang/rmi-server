@@ -1,0 +1,17 @@
+FROM java:7u79-jre
+
+COPY rmi-server.zip /rmi-server.zip
+COPY sources.list /etc/apt/sources.list
+RUN apt-get update
+RUN apt-get install -y unzip
+WORKDIR /
+RUN unzip -o rmi-server.zip
+
+RUN chmod +x rmi-server/bin/run.sh
+RUN chmod +x rmi-server/lib/*.jar
+
+EXPOSE 1199
+
+WORKDIR /rmi-server/bin/
+
+CMD ["sh","run.sh"]
